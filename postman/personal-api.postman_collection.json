@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "random-uuid",
+		"name": "Personal API",
+		"description": "A Go-based REST API microservice for managing a personal website",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/register",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "auth", "register"]
+						}
+					}
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/auth/login",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "auth", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Public Information",
+			"item": [
+				{
+					"name": "Get Personal Info",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/v1/personal",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "personal"]
+						}
+					}
+				},
+				{
+					"name": "Get Contact Info",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/v1/contact",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "contact"]
+						}
+					}
+				},
+				{
+					"name": "Get All Social Links",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/v1/social",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "social"]
+						}
+					}
+				},
+				{
+					"name": "Get Social Link by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/v1/social/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "social", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Get All Posts",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts"]
+						}
+					}
+				},
+				{
+					"name": "Get Post by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"My First Post\",\n    \"content\": \"This is the content of my first post.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts"]
+						}
+					}
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Updated Post Title\",\n    \"content\": \"Updated content of the post.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/user",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts", "user"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Personal Info Management",
+			"item": [
+				{
+					"name": "Update Personal Info",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"bio\": \"Full Stack Developer\",\n    \"avatar_url\": \"https://example.com/avatar.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/personal",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "personal"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Contact Info Management",
+			"item": [
+				{
+					"name": "Update Contact Info",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"contact@example.com\",\n    \"phone\": \"+1234567890\",\n    \"address\": \"123 Main St, City, Country\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/contact",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "contact"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Admin - Social Links Management",
+			"item": [
+				{
+					"name": "Create Social Link",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"platform\": \"GitHub\",\n    \"url\": \"https://github.com/username\",\n    \"icon\": \"github\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/social",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "social"]
+						}
+					}
+				},
+				{
+					"name": "Update Social Link",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"platform\": \"GitHub\",\n    \"url\": \"https://github.com/new-username\",\n    \"icon\": \"github\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/social/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "social", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Social Link",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/social/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "social", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "token",
+			"value": "your-jwt-token-here"
+		}
+	]
+}

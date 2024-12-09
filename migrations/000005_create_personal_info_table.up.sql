@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS personal_info (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    title VARCHAR(255),
+    bio TEXT,
+    avatar_url VARCHAR(255),
+    resume_url VARCHAR(255),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    deleted_at TIMESTAMP WITH TIME ZONE
+);
