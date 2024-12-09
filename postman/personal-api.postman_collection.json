@@ -28,7 +28,64 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "auth", "register"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "User registered successfully",
+								"data": {
+									"user": {
+										"id": 1,
+										"username": "John Doe",
+										"email": "john@example.com",
+										"role_id": 2
+									}
+								}
+							}
+						},
+						{
+							"name": "Error - Email Taken",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Email already registered",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Login",
@@ -49,7 +106,65 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "auth", "login"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"password123\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Login successful",
+								"data": {
+									"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+									"user": {
+										"id": 1,
+										"username": "John Doe",
+										"email": "john@example.com",
+										"role_id": 2
+									}
+								}
+							}
+						},
+						{
+							"name": "Error - Invalid Credentials",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john@example.com\",\n    \"password\": \"wrongpassword\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Invalid email or password",
+								"data": null
+							}
+						}
+					]
 				}
 			]
 		},
@@ -65,7 +180,36 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "personal"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Personal information retrieved successfully",
+								"data": {
+									"id": 1,
+									"name": "John Doe",
+									"bio": "Full Stack Developer",
+									"avatar_url": "https://example.com/avatar.jpg",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						}
+					]
 				},
 				{
 					"name": "Get Contact Info",
@@ -76,7 +220,36 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "contact"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Contact information retrieved successfully",
+								"data": {
+									"id": 1,
+									"email": "contact@example.com",
+									"phone": "+1234567890",
+									"address": "123 Main St, City, Country",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						}
+					]
 				},
 				{
 					"name": "Get All Social Links",
@@ -87,7 +260,46 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "social"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Social links retrieved successfully",
+								"data": [
+									{
+										"id": 1,
+										"platform": "GitHub",
+										"url": "https://github.com/username",
+										"icon": "github",
+										"created_at": "2024-01-01T00:00:00Z",
+										"updated_at": "2024-01-01T00:00:00Z"
+									},
+									{
+										"id": 2,
+										"platform": "LinkedIn",
+										"url": "https://linkedin.com/in/username",
+										"icon": "linkedin",
+										"created_at": "2024-01-01T00:00:00Z",
+										"updated_at": "2024-01-01T00:00:00Z"
+									}
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get Social Link by ID",
@@ -104,7 +316,56 @@
 								}
 							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Social link retrieved successfully",
+								"data": {
+									"id": 1,
+									"platform": "GitHub",
+									"url": "https://github.com/username",
+									"icon": "github",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Not Found",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Social link not found",
+								"data": null
+							}
+						}
+					]
 				}
 			]
 		},
@@ -120,7 +381,46 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "posts"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Posts retrieved successfully",
+								"data": [
+									{
+										"id": 1,
+										"title": "First Post",
+										"content": "Content of first post",
+										"user_id": 1,
+										"created_at": "2024-01-01T00:00:00Z",
+										"updated_at": "2024-01-01T00:00:00Z"
+									},
+									{
+										"id": 2,
+										"title": "Second Post",
+										"content": "Content of second post",
+										"user_id": 1,
+										"created_at": "2024-01-01T00:00:00Z",
+										"updated_at": "2024-01-01T00:00:00Z"
+									}
+								]
+							}
+						}
+					]
 				},
 				{
 					"name": "Get Post by ID",
@@ -137,7 +437,56 @@
 								}
 							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Post retrieved successfully",
+								"data": {
+									"id": 1,
+									"title": "First Post",
+									"content": "Content of first post",
+									"user_id": 1,
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Not Found",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Post not found",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Create Post",
@@ -162,7 +511,64 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "posts"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"My First Post\",\n    \"content\": \"This is the content of my first post.\"\n}"
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Post created successfully",
+								"data": {
+									"id": 1,
+									"title": "My First Post",
+									"content": "This is the content of my first post.",
+									"user_id": 1,
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"My First Post\",\n    \"content\": \"This is the content of my first post.\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Update Post",
@@ -193,7 +599,64 @@
 								}
 							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Updated Post Title\",\n    \"content\": \"Updated content of the post.\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Post updated successfully",
+								"data": {
+									"id": 1,
+									"title": "Updated Post Title",
+									"content": "Updated content of the post.",
+									"user_id": 1,
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"Updated Post Title\",\n    \"content\": \"Updated content of the post.\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete Post",
@@ -216,7 +679,49 @@
 								}
 							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "DELETE"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Post deleted successfully",
+								"data": null
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "DELETE"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Get User Posts",
@@ -233,7 +738,66 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "posts", "user"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "User posts retrieved successfully",
+								"data": [
+									{
+										"id": 1,
+										"title": "First Post",
+										"content": "Content of first post",
+										"user_id": 1,
+										"created_at": "2024-01-01T00:00:00Z",
+										"updated_at": "2024-01-01T00:00:00Z"
+									},
+									{
+										"id": 2,
+										"title": "Second Post",
+										"content": "Content of second post",
+										"user_id": 1,
+										"created_at": "2024-01-01T00:00:00Z",
+										"updated_at": "2024-01-01T00:00:00Z"
+									}
+								]
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "GET"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				}
 			]
 		},
@@ -263,7 +827,64 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "personal"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"bio\": \"Full Stack Developer\",\n    \"avatar_url\": \"https://example.com/avatar.jpg\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Personal information updated successfully",
+								"data": {
+									"id": 1,
+									"name": "John Doe",
+									"bio": "Full Stack Developer",
+									"avatar_url": "https://example.com/avatar.jpg",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"bio\": \"Full Stack Developer\",\n    \"avatar_url\": \"https://example.com/avatar.jpg\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				}
 			]
 		},
@@ -293,7 +914,64 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "contact"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"contact@example.com\",\n    \"phone\": \"+1234567890\",\n    \"address\": \"123 Main St, City, Country\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Contact information updated successfully",
+								"data": {
+									"id": 1,
+									"email": "contact@example.com",
+									"phone": "+1234567890",
+									"address": "123 Main St, City, Country",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"contact@example.com\",\n    \"phone\": \"+1234567890\",\n    \"address\": \"123 Main St, City, Country\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				}
 			]
 		},
@@ -323,7 +1001,64 @@
 							"host": ["{{base_url}}"],
 							"path": ["api", "v1", "social"]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"platform\": \"GitHub\",\n    \"url\": \"https://github.com/username\",\n    \"icon\": \"github\"\n}"
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Social link created successfully",
+								"data": {
+									"id": 1,
+									"platform": "GitHub",
+									"url": "https://github.com/username",
+									"icon": "github",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "POST",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"platform\": \"GitHub\",\n    \"url\": \"https://github.com/username\",\n    \"icon\": \"github\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Update Social Link",
@@ -354,7 +1089,64 @@
 								}
 							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"platform\": \"GitHub\",\n    \"url\": \"https://github.com/new-username\",\n    \"icon\": \"github\"\n}"
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Social link updated successfully",
+								"data": {
+									"id": 1,
+									"platform": "GitHub",
+									"url": "https://github.com/new-username",
+									"icon": "github",
+									"created_at": "2024-01-01T00:00:00Z",
+									"updated_at": "2024-01-01T00:00:00Z"
+								}
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "PATCH",
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"platform\": \"GitHub\",\n    \"url\": \"https://github.com/new-username\",\n    \"icon\": \"github\"\n}"
+								}
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				},
 				{
 					"name": "Delete Social Link",
@@ -377,7 +1169,49 @@
 								}
 							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "DELETE"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "success",
+								"message": "Social link deleted successfully",
+								"data": null
+							}
+						},
+						{
+							"name": "Error - Unauthorized",
+							"originalRequest": {
+								"method": "DELETE"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"body": {
+								"status": "error",
+								"message": "Unauthorized",
+								"data": null
+							}
+						}
+					]
 				}
 			]
 		}

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"personal-api/internal/entity"
 	"personal-api/internal/service"
+	"personal-api/pkg/response"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -32,13 +33,13 @@ type UpdatePostRequest struct {
 func (h *PostHandler) CreatePost(c *gin.Context) {
 	var req CreatePostRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, response.Error(err.Error()))
 		return
 	}
 
 	userID, exists := c.Get("userID")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found in context"})
+		c.JSON(http.StatusUnauthorized, response.Error("User not found in context"))
 		return
 	}
 
@@ -49,29 +50,29 @@ func (h *PostHandler) CreatePost(c *gin.Context) {
 	}
 
 	if err := h.postService.CreatePost(post); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusCreated, post)
+	c.JSON(http.StatusCreated, response.Success("Post created successfully", post))
 }
 
 func (h *PostHandler) UpdatePost(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid post ID"})
+		c.JSON(http.StatusBadRequest, response.Error("Invalid post ID"))
 		return
 	}
 
 	var req UpdatePostRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, response.Error(err.Error()))
 		return
 	}
 
 	userID, exists := c.Get("userID")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found in context"})
+		c.JSON(http.StatusUnauthorized, response.Error("User not found in context"))
 		return
 	}
 
@@ -82,73 +83,73 @@ func (h *PostHandler) UpdatePost(c *gin.Context) {
 		UserID:  userID.(uint),
 	}
 
-	if err := h.postService.UpdatePost(post, userID.(uint)); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	if err := h.postService.UpdatePost(post, uint(id)); err != nil {
+		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, post)
+	c.JSON(http.StatusOK, response.Success("Post updated successfully", post))
 }
 
 func (h *PostHandler) DeletePost(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid post ID"})
+		c.JSON(http.StatusBadRequest, response.Error("Invalid post ID"))
 		return
 	}
 
 	userID, exists := c.Get("userID")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found in context"})
+		c.JSON(http.StatusUnauthorized, response.Error("User not found in context"))
 		return
 	}
 
 	if err := h.postService.DeletePost(uint(id), userID.(uint)); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "post deleted successfully"})
+	c.JSON(http.StatusOK, response.Success("Post deleted successfully", nil))
 }
 
 func (h *PostHandler) GetPost(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 32)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid post ID"})
+		c.JSON(http.StatusBadRequest, response.Error("Invalid post ID"))
 		return
 	}
 
 	post, err := h.postService.GetPost(uint(id))
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "post not found"})
+		c.JSON(http.StatusNotFound, response.Error("Post not found"))
 		return
 	}
 
-	c.JSON(http.StatusOK, post)
+	c.JSON(http.StatusOK, response.Success("Post retrieved successfully", post))
 }
 
 func (h *PostHandler) GetAllPosts(c *gin.Context) {
 	posts, err := h.postService.GetAllPosts()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, posts)
+	c.JSON(http.StatusOK, response.Success("Posts retrieved successfully", posts))
 }
 
 func (h *PostHandler) GetUserPosts(c *gin.Context) {
 	userID, exists := c.Get("userID")
 	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "user not found in context"})
+		c.JSON(http.StatusUnauthorized, response.Error("User not found in context"))
 		return
 	}
 
 	posts, err := h.postService.GetUserPosts(userID.(uint))
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, posts)
+	c.JSON(http.StatusOK, response.Success("User posts retrieved successfully", posts))
 }

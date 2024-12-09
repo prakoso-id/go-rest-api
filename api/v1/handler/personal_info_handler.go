@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"personal-api/internal/entity"
 	"personal-api/internal/service"
+	"personal-api/pkg/response"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,7 +30,7 @@ type UpsertPersonalInfoRequest struct {
 func (h *PersonalInfoHandler) UpsertPersonalInfo(c *gin.Context) {
 	var req UpsertPersonalInfoRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, response.Error(err.Error()))
 		return
 	}
 
@@ -42,19 +43,19 @@ func (h *PersonalInfoHandler) UpsertPersonalInfo(c *gin.Context) {
 	}
 
 	if err := h.service.UpsertPersonalInfo(info); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, info)
+	c.JSON(http.StatusOK, response.Success("Personal info updated successfully", info))
 }
 
 func (h *PersonalInfoHandler) GetPersonalInfo(c *gin.Context) {
 	info, err := h.service.GetPersonalInfo()
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Personal info not found"})
+		c.JSON(http.StatusNotFound, response.Error("Personal info not found"))
 		return
 	}
 
-	c.JSON(http.StatusOK, info)
+	c.JSON(http.StatusOK, response.Success("Personal info retrieved successfully", info))
 }
