@@ -21,13 +21,20 @@ func NewPostHandler(postService service.PostService) *PostHandler {
 }
 
 type CreatePostRequest struct {
-	Title   string `json:"title" binding:"required"`
-	Content string `json:"content" binding:"required"`
+	Title   string   `json:"title" binding:"required"`
+	Content string   `json:"content" binding:"required"`
+	Images  []Image  `json:"images"`
+}
+
+type Image struct {
+	URL         string `json:"url" binding:"required"`
+	Description string `json:"description"`
 }
 
 type UpdatePostRequest struct {
-	Title   string `json:"title" binding:"required"`
-	Content string `json:"content" binding:"required"`
+	Title   string  `json:"title" binding:"required"`
+	Content string  `json:"content" binding:"required"`
+	Images  []Image `json:"images"`
 }
 
 func (h *PostHandler) CreatePost(c *gin.Context) {
@@ -43,13 +50,24 @@ func (h *PostHandler) CreatePost(c *gin.Context) {
 		return
 	}
 
+	// Create post entity
 	post := &entity.Post{
 		Title:   req.Title,
 		Content: req.Content,
 		UserID:  userID.(uint),
 	}
 
-	if err := h.postService.CreatePost(post); err != nil {
+	// Convert request images to entity images
+	var images []entity.PostImage
+	for _, img := range req.Images {
+		images = append(images, entity.PostImage{
+			URL:         img.URL,
+			Description: img.Description,
+		})
+	}
+
+	// Create post with images
+	if err := h.postService.CreatePostWithImages(post, images); err != nil {
 		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
@@ -83,7 +101,16 @@ func (h *PostHandler) UpdatePost(c *gin.Context) {
 		UserID:  userID.(uint),
 	}
 
-	if err := h.postService.UpdatePost(post, uint(id)); err != nil {
+	// Convert request images to entity images
+	var images []entity.PostImage
+	for _, img := range req.Images {
+		images = append(images, entity.PostImage{
+			URL:         img.URL,
+			Description: img.Description,
+		})
+	}
+
+	if err := h.postService.UpdatePostWithImages(post, images); err != nil {
 		c.JSON(http.StatusInternalServerError, response.Error(err.Error()))
 		return
 	}
