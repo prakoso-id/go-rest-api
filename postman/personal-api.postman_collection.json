@@ -1214,6 +1214,340 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "Post Images",
+			"item": [
+				{
+					"name": "Get Post Images",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/posts/:id/images",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "posts", ":id", "images"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Post ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Post Image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"post_id\": 1,\n    \"url\": \"https://example.com/image.jpg\",\n    \"description\": \"Sample image description\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/post-images",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "post-images"]
+						}
+					}
+				},
+				{
+					"name": "Update Post Image",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"url\": \"https://example.com/updated-image.jpg\",\n    \"description\": \"Updated image description\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/post-images/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "post-images", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Post Image ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Post Image",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/post-images/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "post-images", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Post Image ID"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "User Management",
+			"item": [
+				{
+					"name": "List Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "users"]
+						}
+					}
+				},
+				{
+					"name": "Get User Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "users", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "User ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"Updated Name\",\n    \"email\": \"updated@example.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "users", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "User ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/users/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "users", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "User ID"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Role Management",
+			"item": [
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"editor\",\n    \"description\": \"Editor role with content management access\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "roles"]
+						}
+					}
+				},
+				{
+					"name": "List Roles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "roles"]
+						}
+					}
+				},
+				{
+					"name": "Get Role Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "roles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Role ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"senior_editor\",\n    \"description\": \"Senior editor role with additional privileges\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "roles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Role ID"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/v1/roles/:id",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "roles", ":id"],
+							"variable": [
+								{
+									"key": "id",
+									"value": "1",
+									"description": "Role ID"
+								}
+							]
+						}
+					}
+				}
+			]
 		}
 	],
 	"variable": [
