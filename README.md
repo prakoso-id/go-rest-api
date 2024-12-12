@@ -82,17 +82,17 @@ personal-api/
 
 6. **Run database migrations**
    ```bash
-   # Create a new migration
-   migrate create -ext sql -dir migrations -seq migration_name
-
-   # Run migrations up
+   # Apply all migrations
    migrate -path migrations -database "postgresql://username:password@localhost:5432/personal_website?sslmode=disable" up
 
-   # Run migrations down
+   # Rollback all migrations
    migrate -path migrations -database "postgresql://username:password@localhost:5432/personal_website?sslmode=disable" down
 
-   # Go down specific versions
-   migrate -path migrations -database "postgresql://username:password@localhost:5432/personal_website?sslmode=disable" down 1
+   # Apply/Rollback specific number of migrations
+   migrate -path migrations -database "postgresql://username:password@localhost:5432/personal_website?sslmode=disable" up/down N
+
+   # Check current version
+   migrate -path migrations -database "postgresql://username:password@localhost:5432/personal_website?sslmode=disable" version
 
    # Force a specific version
    migrate -path migrations -database "postgresql://username:password@localhost:5432/personal_website?sslmode=disable" force VERSION
@@ -167,44 +167,95 @@ The API uses JWT (JSON Web Tokens) for authentication. To access protected route
 
 ## Database Migrations
 
-### Running Migrations
+### Creating Migrations
 
-1. **Create a new migration**
+1. **Using golang-migrate CLI**
    ```bash
+   # Create a new migration manually
    migrate create -ext sql -dir migrations -seq migration_name
    ```
 
-2. **Apply migrations**
+2. **Using the code generator**
    ```bash
-   # Apply all migrations
-   migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" up
+   # Generate only migrations for a new module
+   go run cmd/generator/main.go -name ModuleName -migrations
 
-   # Apply specific number of migrations
-   migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" up N
+   # Generate complete module (including migrations)
+   go run cmd/generator/main.go -name ModuleName
    ```
 
-3. **Rollback migrations**
+   Examples:
    ```bash
-   # Rollback all migrations
-   migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" down
+   # Generate migrations for a Product module
+   go run cmd/generator/main.go -name Product -migrations
+   # This will create:
+   # - migrations/YYYYMMDDHHMMSS_create_product_table.up.sql
+   # - migrations/YYYYMMDDHHMMSS_create_product_table.down.sql
 
-   # Rollback specific number of migrations
-   migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" down N
+   # Generate complete Category module
+   go run cmd/generator/main.go -name Category
+   # This will create:
+   # - migrations/YYYYMMDDHHMMSS_create_category_table.up.sql
+   # - migrations/YYYYMMDDHHMMSS_create_category_table.down.sql
+   # - internal/entity/category.go
+   # - internal/repository/category_repository.go
+   # - internal/service/category_service.go
+   # - api/v1/handler/category_handler.go
+   # - docs/setup_category.md
+
+   # Generate complete Portfolio module
+   go run cmd/generator/main.go -name Portfolio
+   # This will create a complete module with:
+   # - Database migrations for portfolio table
+   # - Portfolio entity with GORM tags
+   # - Repository with CRUD operations
+   # - Service layer with business logic
+   # - HTTP handler with RESTful endpoints:
+   #   - GET    /api/v1/portfolio     - List all portfolios
+   #   - GET    /api/v1/portfolio/:id - Get a portfolio
+   #   - POST   /api/v1/portfolio     - Create portfolio
+   #   - PATCH  /api/v1/portfolio/:id - Update portfolio
+   #   - DELETE /api/v1/portfolio/:id - Delete portfolio
    ```
 
-4. **Other commands**
-   ```bash
-   # Check current version
-   migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" version
+### Running Migrations
 
-   # Force a specific version
-   migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" force VERSION
-   ```
+```bash
+# Apply all migrations
+migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" up
 
-### Migration Files Structure
-Each migration consists of two files:
-- `NNNN_name.up.sql`: Contains the changes to apply
-- `NNNN_name.down.sql`: Contains the changes to rollback
+# Rollback all migrations
+migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" down
+
+# Apply/Rollback specific number of migrations
+migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" up/down N
+
+# Check current version
+migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" version
+
+# Force a specific version
+migrate -path migrations -database "postgresql://postgres:postgres@localhost:5432/personal_website?sslmode=disable" force VERSION
+```
+
+## Code Generation
+
+The project includes a code generator to quickly scaffold new modules:
+
+```bash
+# Generate a complete module (migrations, entity, repository, service, handler)
+go run cmd/generator/main.go -name ModuleName
+
+# Generate only migrations for a module
+go run cmd/generator/main.go -name ModuleName -migrations
+```
+
+Generated files include:
+- Database migrations (up/down)
+- Entity definition
+- Repository interface and implementation
+- Service interface and implementation
+- HTTP handler with CRUD operations
+- Setup instructions
 
 ## Development
 
